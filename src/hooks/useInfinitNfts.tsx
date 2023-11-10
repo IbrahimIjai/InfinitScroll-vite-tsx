@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const useInfiniteNFTs = (myArray: number[]) => {
   const { ref, inView } = useInView();
 
-  const fetchTodos = async ({ pageParam }: { pageParam: number }) => {
+  const fetchNFTs = async ({ pageParam }: { pageParam: number }) => {
     const start = (pageParam - 1) * 15;
     const end = pageParam * 15;
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -27,7 +27,7 @@ const useInfiniteNFTs = (myArray: number[]) => {
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["nfts"],
-    queryFn: fetchTodos,
+    queryFn: fetchNFTs,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = lastPage.length ? allPages.length + 1 : undefined;
@@ -37,7 +37,6 @@ const useInfiniteNFTs = (myArray: number[]) => {
 
   useEffect(() => {
     if (inView && hasNextPage) {
-      console.log("Fire!");
         fetchNextPage();
       
     }
